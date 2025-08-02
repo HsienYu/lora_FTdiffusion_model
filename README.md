@@ -59,6 +59,7 @@ A comprehensive project for fine-tuning Stable Diffusion models using LoRA (Low-
 
 ## Requirements
 
+
 - Python 3.9+
 - PyTorch 2.0+
 - CUDA 11.8+ (for GPU training)
