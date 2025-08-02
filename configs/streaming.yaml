@@ -1,0 +1,67 @@
+# Streaming Configuration for Real-time Diffusion
+
+# Model Configuration
+model:
+  checkpoint_path: "./models/checkpoints/best_model.pth"
+  lora_weights_path: "./models/lora_weights/latest.safetensors"
+  enable_compile: true  # PyTorch 2.0 compilation
+  
+# Streaming Pipeline
+pipeline:
+  num_inference_steps: 20  # Reduced for streaming
+  guidance_scale: 7.5
+  scheduler: "DPMSolverMultistepScheduler"  # Fast scheduler
+  safety_checker: false  # Disable for speed
+  
+# Performance Optimization
+optimization:
+  enable_xformers: true
+  enable_flash_attention: true
+  memory_efficient_attention: true
+  enable_cpu_offload: false
+  enable_sequential_cpu_offload: false
+  enable_model_cpu_offload: false
+  
+# Quantization (for edge deployment)
+quantization:
+  enable: false
+  method: "dynamic"  # or "static"
+  backend: "qnnpack"
+  
+# Streaming Server
+server:
+  host: "0.0.0.0"
+  port: 8000
+  max_concurrent_requests: 4
+  request_timeout: 30
+  enable_websocket: true
+  websocket_port: 8001
+  
+# Queue Management
+queue:
+  max_queue_size: 100
+  priority_levels: 3
+  timeout_seconds: 60
+  enable_redis: false
+  redis_url: "redis://localhost:6379"
+  
+# Caching
+cache:
+  enable_model_cache: true
+  enable_image_cache: false
+  cache_size_mb: 1024
+  cache_ttl_seconds: 3600
+  
+# Monitoring
+monitoring:
+  enable_metrics: true
+  metrics_port: 9090
+  log_level: "INFO"
+  enable_health_check: true
+  
+# Image Processing
+image:
+  max_resolution: 512
+  supported_formats: ["png", "jpg", "jpeg"]
+  quality: 95
+  enable_progressive: true
